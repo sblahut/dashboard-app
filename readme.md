@@ -1,6 +1,6 @@
 # dashboard-app
 
-This template should help get you started developing with Vue 3 in Vite.
+This should serve as a simple COVID-19 Dashboard app that will utilize visualizations in Vue.js
 
 ## Recommended IDE Setup
 
@@ -14,6 +14,7 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ```sh
 npm install
+npm i vue-chart.js chart.js axios moment bootstrap
 ```
 
 ### Compile and Hot-Reload for Development
