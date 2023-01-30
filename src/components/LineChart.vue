@@ -9,8 +9,8 @@ export default {
     components: { Bar },
     computed: {
         chartData() {
-            const dates = this.chartData.map(d => d.data)//.reverse();
-            const totals = this.chartData.map(d => d.total)//.reverse();
+            const dates = this.chartData.map(d => d.data).reverse();
+            const totals = this.chartData.map(d => d.total).reverse();
             return {
 
                 chartData: {
