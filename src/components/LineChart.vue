@@ -1,36 +1,30 @@
 <script>
-import { Line } from "vue-chartjs";
+import { Bar } from "vue-chartjs";
+import { Chart, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from "chart.js";
+
+Chart.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 export default {
-    extends: Line,
-    props: {
-        label: {
-            type: String
-        },
-        chartData: {
-            type: Array
-        },
-        options: {
-            type: Object
-        }
-    },
-    mounted() {
-        // to pass properties with chart.js must be flat arrays/1 dimensional
-        const dates = this.chartData.map(d => d.data).reverse();
-        const totals = this.chartData.map(d => d.total).reverse();
+    name: "BarChart",
+    components: { Bar },
+    computed: {
+        chartData() {
+            const dates = this.chartData.map(d => d.data)//.reverse();
+            const totals = this.chartData.map(d => d.total)//.reverse();
+            return {
 
-        this.renderChart(
-            {
-                labels: dates,
-                datasets: [
-                    {
-                        label: this.label,
-                        data: totals
-                    }
-                ]
-            },
-            this.options
-        );
+                chartData: {
+                    labels: dates,
+                    datasets: [
+                        {
+                            label: this.label,
+                            backgroundColor: "#f87979",
+                            data: totals
+                        }
+                    ]
+                }
+            }
+        }
     }
 };
 </script>

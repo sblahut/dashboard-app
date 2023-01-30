@@ -1,15 +1,24 @@
 <template>
   <div id="app" class="container">
-    <div class="row mt-5" v-if="arrPositive.length > 0">
+    <div class="row mt-5">
       <div class="col">
-        <h2>Positive</h2>
-        <line-chart 
-        :chartData="arrPositive" 
-        :options="chartOptions" 
-        label="Postive">
-        </line-chart>
+        <h1 class="text-center">COVID-19 DATA</h1>
       </div>
     </div>
+      
+    <Bar class="row mt-5" v-if="arrPositive.length > 0">
+      <div class="col">
+        <h2 class="text-center">Positive</h2>
+        <Bar :data="arrPositive" :options="chartOptions" label="Postive"/>
+      </div>
+    </Bar>
+
+    <Bar class="row mt-5" v-if="arrNegative.length > 0">
+      <div class="col">
+        <h2 class="text-center">Negative</h2>
+        <Bar :data="arrNegative" :options="chartOptions" label="Negative"/>
+      </div>
+    </Bar>
   </div>
 </template>
 
@@ -20,16 +29,16 @@
 <script>
 import axios from "axios"; 
 import moment from "moment";
+import { Bar } from "vue-chartjs";
 
-import LineChart from "./components/LineChart";
+import BarChart from "./components/LineChart.vue";
 
 export default {
   name: "app",
-  components: { LineChart },
+  components: { BarChart },
   data() {
       return {
         arrDate: [],
-        arrState: [],
         arrPositive: [],
         arrNegative: [],
         chartOptions: {
@@ -41,24 +50,20 @@ export default {
 async created() {
   const { data } = await axios.get("https://api.covidtracking.com/v1/us/current.json");
   
+
   data.forEach(d => {
     const date = moment(d.date, "YYYYMMDD").format("MM/DD");
 
     const {
-      state,
       positive,
-      negative
-      
+      negative    
     } = d;
-
-    this.arrState.push({date, total: state});
-    this.arrPositive.push({date, total: positive});
-    this.arrNegative.push({date, total: negative});
-
-    console.log(this.arrPositive);
-  })
+    
+    this.arrPositive.push({ date, total: positive });
+    this.arrNegative.push({ date, total: negative });
+  });
 }
-}
+};
 </script>
 
 
